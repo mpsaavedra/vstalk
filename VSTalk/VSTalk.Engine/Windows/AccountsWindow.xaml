@@ -1,0 +1,42 @@
+﻿<Controls:MetroWindow x:Class="VSTalk.Engine.Windows.AccountsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" Title="Settings" Height="300" Width="300">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid CanUserAddRows="False" CanUserDeleteRows="False"
+                  CanUserResizeColumns="True" CanUserResizeRows="False"
+                  CanUserReorderColumns="True" SelectionMode="Single"
+                  AutoGenerateColumns="False"
+                  SelectionUnit="FullRow"
+                  ItemsSource="{Binding Clients}"
+                  SelectedItem="{Binding SelectedClient}"
+                  >
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Enabled" Width="Auto"
+                    Binding="{Binding Enabled, Mode=TwoWay, 
+                    UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Name" Width="*" 
+                                    Binding="{Binding Login}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Margin="5" Padding="5" Content="Add" Command="{Binding AddNewClient}"/>
+            <Button Margin="5" Padding="5" Content="Delete" Command="{Binding RemoveClient}"/>
+        </StackPanel>
+    </Grid>
+</Controls:MetroWindow>

@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7850D054-2F52-4D28-838F-2585B0183F6C}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VSTalk.Engine</RootNamespace>
+    <AssemblyName>VSTalk.Engine</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ExpressionBlendVersion>3.0.1927.0</ExpressionBlendVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\agsXMPP.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\packages\MahApps.Metro.0.9.0.0\lib\net40\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.0.9.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Converters\VisibilityIfCanExecuteConverter.cs" />
+    <Compile Include="Converters\VisibleIfDisconected.cs" />
+    <Compile Include="Converters\VisibleIfTrueConverter.cs" />
+    <Compile Include="Core\Authorization\AuthorizationProvider.cs" />
+    <Compile Include="Core\Authorization\IAuthorizationProvider.cs" />
+    <Compile Include="Core\Connector\ClientConnector.cs" />
+    <Compile Include="Core\Context\IAccountDeserilizer.cs" />
+    <Compile Include="Core\Context\IAccountSerilizer.cs" />
+    <Compile Include="Core\Context\IModelContextSaver.cs" />
+    <Compile Include="Core\Context\IModelInitilizer.cs" />
+    <Compile Include="Core\Context\ModelContextSaver.cs" />
+    <Compile Include="Core\Context\ModelInitilizer.cs" />
+    <Compile Include="Core\IConnectionContainer.cs" />
+    <Compile Include="Core\Controls\ControlRepository.cs" />
+    <Compile Include="Core\Controls\HostedControlAttribute.cs" />
+    <Compile Include="Core\Context\IClientContainer.cs" />
+    <Compile Include="Core\Controls\IControlsRepository.cs" />
+    <Compile Include="Core\Context\IModelContext.cs" />
+    <Compile Include="Core\Context\ModelContext.cs" />
+    <Compile Include="Core\Connector\IConnector.cs" />
+    <Compile Include="Core\Notifications\INotificationQueue.cs" />
+    <Compile Include="Core\PresenceObserver\IPersenceListener.cs" />
+    <Compile Include="Core\PresenceObserver\PresenceListener.cs" />
+    <Compile Include="Core\RosterObserver\IRosterInfo.cs" />
+    <Compile Include="Core\PresenceObserver\PresenceObserver.cs" />
+    <Compile Include="Core\RosterObserver\IRosterContainer.cs" />
+    <Compile Include="Core\RosterObserver\IRosterListener.cs" />
+    <Compile Include="Core\RosterObserver\RosterContainer.cs" />
+    <Compile Include="Core\RosterObserver\RosterListener.cs" />
+    <Compile Include="Core\RosterObserver\RosterObesrver.cs" />
+    <Compile Include="Core\XmppUtils\XmppIdConverter.cs" />
+    <Compile Include="ViewModel\ContactList\InterlocutorCollectionConverter.cs" />
+    <Compile Include="ViewModel\ContactList\NullInterlocutor.cs" />
+    <Compile Include="Windows\AccountsWindow.xaml.cs">
+      <DependentUpon>AccountsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddContactWindow.xaml.cs">
+      <DependentUpon>AddContactWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ClientWindow.xaml.cs">
+      <DependentUpon>ClientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\ClientStateToColorConverter.cs" />
+    <Compile Include="Converters\CommonStateToActionNameConverter.cs" />
+    <Compile Include="Converters\InterlocutorStateToColorConverter.cs" />
+    <Compile Include="Converters\VisibleIfFalseConverter.cs" />
+    <Compile Include="Core\IClientService.cs" />
+    <Compile Include="Core\IEnvironmentManager.cs" />
+    <Compile Include="Core\IWindowsManager.cs" />
+    <Compile Include="Core\Notifications\NotificationQueue.cs" />
+    <Compile Include="Core\Messages\AuthorizationRequestMessage.cs" />
+    <Compile Include="Core\Messages\InternalClientErrorMessage.cs" />
+    <Compile Include="Core\VSTalkCore.cs" />
+    <Compile Include="Core\ClientConnection.cs" />
+    <Compile Include="Windows\HistoryWindow.xaml.cs">
+      <DependentUpon>HistoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Notifications\INotificationMessage.cs" />
+    <Compile Include="Settings\FileAccountSerilizer.cs" />
+    <Compile Include="Settings\MessageRepository.cs" />
+    <Compile Include="Utils\ElementSpy.cs" />
+    <Compile Include="Utils\Extensions\MessageExtension.cs" />
+    <Compile Include="Utils\Extensions\PresenceExtension.cs" />
+    <Compile Include="Utils\RelayCommand.cs" />
+    <Compile Include="ViewModel\ChatFrameViewModel.cs" />
+    <Compile Include="ViewModel\ContactList\ClientNodeViewModel.cs" />
+    <Compile Include="ViewModel\ContactList\ContactListViewModel.cs" />
+    <Compile Include="ViewModel\InterlocutorChatViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NotificationViewModel.cs" />
+    <Compile Include="View\CommonChatFrame.xaml.cs">
+      <DependentUpon>CommonChatFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContactList.xaml.cs">
+      <DependentUpon>ContactList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IterlocutorChat.xaml.cs">
+      <DependentUpon>IterlocutorChat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainControl.xaml.cs">
+      <DependentUpon>MainControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NotificationControl.xaml.cs">
+      <DependentUpon>NotificationControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\AccountsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddContactWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ClientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\HistoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CommonChatFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContactList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IterlocutorChat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NotificationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="agsXMPP.dll.config" />
+    <None Include="app.config" />
+    <None Include="Key.snk" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <Resource Include="Resources\Entypo.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VsTalk.Model\VSTalk.Model.csproj">
+      <Project>{6E90FF3F-D58A-4F6D-A415-DA37ADC34781}</Project>
+      <Name>VSTalk.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VSTalk.Tools\VSTalk.Tools.csproj">
+      <Project>{6A8BDEFA-A8B3-413D-8736-EED9D06A8BB1}</Project>
+      <Name>VSTalk.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="agsXMPP.dll" />
+    <Content Include="agsXMPP.pdb" />
+    <Content Include="Caliburn.Micro.dll" />
+    <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

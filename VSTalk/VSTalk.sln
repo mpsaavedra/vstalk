@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSTalk.Extension", "VSTalk\VSTalk.Extension.csproj", "{FB00DD00-96E5-414F-86E9-8C76962CFAA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSTalk.Engine", "VSTalk.Engine\VSTalk.Engine.csproj", "{7850D054-2F52-4D28-838F-2585B0183F6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSTalk.Tools", "VSTalk.Tools\VSTalk.Tools.csproj", "{6A8BDEFA-A8B3-413D-8736-EED9D06A8BB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSTalk.Model", "VsTalk.Model\VSTalk.Model.csproj", "{6E90FF3F-D58A-4F6D-A415-DA37ADC34781}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs27
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = VSTalk\\VSTalk.Extension.csproj
+		SccProjectName1 = VSTalk
+		SccLocalPath1 = VSTalk
+		SccProjectUniqueName2 = VSTalk.Engine\\VSTalk.Engine.csproj
+		SccProjectName2 = VSTalk.Engine
+		SccLocalPath2 = VSTalk.Engine
+		SccProjectUniqueName3 = VSTalk.Tools\\VSTalk.Tools.csproj
+		SccProjectName3 = VSTalk.Tools
+		SccLocalPath3 = VSTalk.Tools
+		SccProjectUniqueName4 = VsTalk.Model\\VSTalk.Model.csproj
+		SccProjectName4 = VsTalk.Model
+		SccLocalPath4 = VsTalk.Model
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB00DD00-96E5-414F-86E9-8C76962CFAA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB00DD00-96E5-414F-86E9-8C76962CFAA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB00DD00-96E5-414F-86E9-8C76962CFAA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB00DD00-96E5-414F-86E9-8C76962CFAA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7850D054-2F52-4D28-838F-2585B0183F6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7850D054-2F52-4D28-838F-2585B0183F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7850D054-2F52-4D28-838F-2585B0183F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7850D054-2F52-4D28-838F-2585B0183F6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A8BDEFA-A8B3-413D-8736-EED9D06A8BB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8BDEFA-A8B3-413D-8736-EED9D06A8BB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8BDEFA-A8B3-413D-8736-EED9D06A8BB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8BDEFA-A8B3-413D-8736-EED9D06A8BB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E90FF3F-D58A-4F6D-A415-DA37ADC34781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E90FF3F-D58A-4F6D-A415-DA37ADC34781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E90FF3F-D58A-4F6D-A415-DA37ADC34781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E90FF3F-D58A-4F6D-A415-DA37ADC34781}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

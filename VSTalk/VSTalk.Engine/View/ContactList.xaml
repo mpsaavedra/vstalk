@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="VSTalk.Engine.View.ContactList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
+             xmlns:conerters="clr-namespace:VSTalk.Engine.Converters" xmlns:jas="clr-namespace:VSTalk.Engine.Utils"
+             xmlns:Model="clr-namespace:VSTalk.Model;assembly=VsTalk.Model"
+             xmlns:ContactList="clr-namespace:VSTalk.Engine.ViewModel.ContactList" d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="ContactListView">
+    <UserControl.Resources>
+        <jas:ElementSpy x:Key="WndSpy" />
+        <conerters:ClientStateToColorConverter x:Key="ClientStateToColorConverter"/>
+        <conerters:InterlocutorStateToColorConverter x:Key="InterlocutorStateToColorConverter"/>
+        <conerters:VisibilityIfCanExecuteConverter x:Key="VisibilityIfCanExecuteConverter"/>
+        <conerters:VisibleIfDisconected x:Key="VisibleIfDisconected"/>
+        <ContactList:InterlocutorCollectionConverter x:Key="InterlocutorCollectionConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <TreeView ItemsSource="{Binding Clients}" HorizontalContentAlignment="Stretch">
+            <TreeView.Resources>
+
+                <HierarchicalDataTemplate DataType="{x:Type ContactList:ClientNodeViewModel}">
+                    <HierarchicalDataTemplate.ItemsSource>
+                        <MultiBinding Converter="{StaticResource InterlocutorCollectionConverter}">
+                            <Binding Path="Interlocutors"/>
+                            <Binding Path="Client"/>
+                        </MultiBinding>
+                    </HierarchicalDataTemplate.ItemsSource>
+                    
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.Resources>
+                                <jas:ElementSpy x:Key="ClientSpy"/>
+                            </Grid.Resources>
+                            <Grid.ContextMenu>
+                                <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}">
+                                    <MenuItem Header="connect" 
+                                              Visibility="{Binding Path=Element.DataContext.Client.State, 
+                                              Source={StaticResource ClientSpy}, 
+                                              Converter={StaticResource VisibleIfDisconected}}"
+                                              Command="{Binding Source={StaticResource WndSpy}, Path=Element.DataContext.ConnectClient}"
+                                              CommandParameter="{Binding Source={StaticResource ClientSpy}, Path=Element.DataContext.Client}"/>
+                                    <MenuItem Header="add contact"
+                                              Command="{Binding Source={StaticResource WndSpy}, Path=Element.DataContext.ShowAddContactWindow}"
+                                              CommandParameter="{Binding Source={StaticResource ClientSpy}, Path=Element.DataContext.Client}"/>
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="15" Height="10" RadiusX="2" RadiusY="2" Margin="5"
+                                           Fill="{Binding Client.State, Converter={StaticResource ClientStateToColorConverter}}" />
+                                <TextBlock Text="{Binding Client.Login}" Margin="5"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+                
+                <HierarchicalDataTemplate DataType="{x:Type ContactList:NullInterlocutor}">
+                    <Grid>
+                        <TextBlock Margin="5" Text="{Binding Notice}" Foreground="DimGray"/>
+                    </Grid>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type Model:Interlocutor}">
+                    <Grid>
+                        <Grid.Resources>
+                            <jas:ElementSpy x:Key="ContactSpy"/>
+                        </Grid.Resources>
+                        <Grid.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" 
+                                          Command="{Binding ElementName=ContactListView, Path=DataContext.ShowInterlocutorChat}"
+                                          CommandParameter="{Binding}"/>
+                        </Grid.InputBindings>
+                        <Grid.ContextMenu>
+                            <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}">
+                                <MenuItem Header="view log"
+                                          Command="{Binding Source={StaticResource WndSpy}, Path=Element.DataContext.ShowContactLog}"
+                                          CommandParameter="{Binding Source={StaticResource ContactSpy}, Path=Element.DataContext}"/>
+                                <MenuItem Header="request authorization" 
+                                          Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource VisibilityIfCanExecuteConverter}}"
+                                          Command="{Binding Source={StaticResource WndSpy}, Path=Element.DataContext.SendRequestAuthorization}"
+                                          CommandParameter="{Binding Source={StaticResource ContactSpy}, Path=Element.DataContext}"
+                                          />
+                                <MenuItem Header="remove"
+                                          Command="{Binding Source={StaticResource WndSpy}, Path=Element.DataContext.RemoveContact}"
+                                          CommandParameter="{Binding Source={StaticResource ContactSpy}, Path=Element.DataContext}"
+                                          />
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Grid.Column="0" Name ="StateEllipse" Width="10" Height="10" Margin="5" Fill="{Binding State, Converter={StaticResource InterlocutorStateToColorConverter}}"/>
+                        <TextBlock Grid.Column="1" Margin="5" Text="{Binding Name}"/>
+                        <Rectangle Name="IsSubscribed" Fill="Red" Grid.Column="2"
+                                   Height="7" Width="7" Margin="0,0,5,0"
+                                   Visibility="Collapsed"/>
+                    </Grid>
+                    <HierarchicalDataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Subscribed}" Value="False">
+                            <Setter TargetName="IsSubscribed" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding HasUnreadMessages}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="StateEllipse" 
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         From="1.0" To="0.0" Duration="0:0:0.3" 
+                                                         AutoReverse="True" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard FillBehavior="Stop">
+                                        <DoubleAnimation Storyboard.TargetName="StateEllipse" 
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </HierarchicalDataTemplate.Triggers>
+                </HierarchicalDataTemplate>
+
+            </TreeView.Resources>
+            <TreeView.ItemContainerStyle>
+                <Style>
+                    <Setter Property="TreeViewItem.IsExpanded" Value="True"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
+    </Grid>
+</UserControl>

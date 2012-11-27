@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="VSTalk.Engine.View.CommonChatFrame"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VSTalk.Engine.ViewModel"
+             xmlns:view="clr-namespace:VSTalk.Engine.View"
+             xmlns:conerters="clr-namespace:VSTalk.Engine.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="ChatFrameControl">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <conerters:InterlocutorStateToColorConverter x:Key="InterlocutorStateToColorConverter"/>
+
+            <DataTemplate x:Key="HeaderContactTabTemplate">
+                <DockPanel>
+                    <Button DockPanel.Dock="Right"
+                        Command="{Binding ElementName = ChatFrameControl, Path = DataContext.CloseInterlocutorTab}"
+                        CommandParameter="{Binding}" Margin="5,0,0,0"
+                        Style="{DynamicResource CloseTabButton}"/>
+                    <ContentPresenter VerticalAlignment="Center" DockPanel.Dock="Left">
+                        <ContentPresenter.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Grid.Column="0" Name ="StateEllipse" Width="10" Height="10" Margin="3" Fill="{Binding Interlocutor.State, Converter={StaticResource InterlocutorStateToColorConverter}}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Interlocutor.Name}" FontSize="15"/>
+                            </Grid>
+                        </ContentPresenter.Content>
+                    </ContentPresenter>
+                </DockPanel>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type local:ChatFrameViewModel}">
+                <Grid>
+                    <Grid x:Name="MainGrid">
+                        <Grid.InputBindings>
+                            <KeyBinding Gesture="CTRL+Enter" Command="{Binding SendMessage}"/>
+                        </Grid.InputBindings>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <TabControl Grid.Row="0" ItemsSource="{Binding ViewContacts}"
+                            ItemTemplate="{StaticResource HeaderContactTabTemplate}"
+                            SelectedItem="{Binding SelectedInterlocutor, Mode=TwoWay}"/>
+                        <Grid Grid.Row="1">
+                            <Grid Grid.Row="0" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Left">
+                                    <Button Content="Call Stack" Command="{Binding PasteCallStack}" Focusable="False"/>
+                                    <Button Content="Debug Output" Command="{Binding PasteDebugOutput}" Focusable="False"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                                    <Button Content="Send" Command="{Binding SendMessage}" Padding="5" Focusable="False"
+                                            ToolTip="CTRL+Enter"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid x:Name="EmptyContactList" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center">Please select a contact.</Label>
+                            <TextBlock HorizontalAlignment="Center">
+                            <Hyperlink Command="{Binding ShowMainControl}">Show contact list</Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding ViewContacts.Count}" Value="0">
+                        <Setter TargetName="MainGrid" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="EmptyContactList" Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type local:InterlocutorChatViewModel}">
+                <view:IterlocutorChat/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <ContentPresenter Content="{Binding}"/>
+</UserControl>
