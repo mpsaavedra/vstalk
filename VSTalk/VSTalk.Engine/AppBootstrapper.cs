@@ -1,8 +1,12 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace VSTalk.Engine
 {
@@ -11,10 +15,22 @@ namespace VSTalk.Engine
         CompositionContainer container;
 
         // INSERT THIS CONSTRUCTUR!!!
-        public AppBootstrapper() : base(false) { }
+        public AppBootstrapper() : base(false) 
+        { 
+        }
 
+
+        VSTalk.Engine.Core.IWindowsManager _windowManagerFromEngine;
         protected override void Configure()
         {
+            ViewLocator.NameTransformer.AddRule
+            (
+            @"(?<nsbefore>([A-Za-z_]\w*\.)*)?(?<nsvm>ViewModels\.)(?<nsafter>([A-Za-z_]\w*\.)*)(?<basename>[A-Za-z_]\w*)(?<suffix>ViewModel$)",
+            @"${nsbefore}Views.${nsafter}${basename}View",
+            @"(([A-Za-z_]\w*\.)*)?ViewModels\.([A-Za-z_]\w*\.)*[A-Za-z_]\w*ViewModel$"
+            );
+
+
             var aggCatalog =
                 new AggregateCatalog(
                     AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()
@@ -24,7 +40,7 @@ namespace VSTalk.Engine
 
             var batch = new CompositionBatch();
 
-            batch.AddExportedValue<IWindowManager>(new WindowManager());
+            batch.AddExportedValue<IWindowManager>(AppBootstrapperHelper.windowsManager);
             batch.AddExportedValue<IEventAggregator>(new EventAggregator());
             batch.AddExportedValue(container);
 
@@ -33,9 +49,9 @@ namespace VSTalk.Engine
 
         protected override IEnumerable<Assembly> SelectAssemblies()
         {
-            return new[] {
-                Assembly.GetExecutingAssembly()
-            };
+            return AssemblySource.Instance.Any() ?
+                           new Assembly[] { } :
+                           new[] { typeof(AppBootstrapper).Assembly };
         }
 
         protected override object GetInstance(Type serviceType, string key)

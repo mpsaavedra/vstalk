@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using VSTalk.Engine.Core;
 using VSTalk.Engine.Core.Context;
+using VSTalk.Engine;
 
 namespace Microsoft.VSTalk
 {
@@ -61,10 +62,12 @@ namespace Microsoft.VSTalk
         /// </summary>
         private void ShowToolWindow(object sender, EventArgs e)
         {
+            AppBootstrapperHelper.StartTest(InitilizeWindowManager());
+            //VSTalkCore.StartTest();
             // Get the instance number 0 of this tool window. This window is single instance so this instance
             // is actually the only one.
             // The last flag is set to true so that if the tool window does not exists it will be created.
-            VSTalkCore.ShowMainWindow();
+            //VSTalkCore.ShowMainWindow();
         }
 
         

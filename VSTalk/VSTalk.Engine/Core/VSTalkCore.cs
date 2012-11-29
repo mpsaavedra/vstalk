@@ -8,6 +8,7 @@ using VSTalk.Engine.Core.Notifications;
 using VSTalk.Model;
 using VSTalk.Engine.ViewModel;
 using VsTalk.Model;
+using Caliburn.Micro;
 
 namespace VSTalk.Engine.Core
 {
@@ -65,6 +66,14 @@ namespace VSTalk.Engine.Core
         public void ShowMainWindow()
         {
             WindowsManager.OpenWindow(ControlsRepository.ContactList);
+        }
+
+        public void StartTest()
+        {
+            new AppBootstrapper();
+
+            var w = IoC.Get<IWindowManager>();
+            w.ShowDialog(new ViewModels.MainViewModel());
         }
 
         public void ShowInterlocutorChat(Interlocutor interlocutor)
